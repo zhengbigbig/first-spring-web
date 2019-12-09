@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyMapper">
+    <!--    要映射的结果RankItem类是一个复杂的结果映射包含的User，因此使用mybatis的结果映射-->
+    <select id="selectRank" resultMap="rankItem">
+        select USER.ID as user_id, name as user_name, M2.SCORE as score
+        from USER
+                 join MATCH M2 on USER.ID = M2.USER_ID
+        order by score
+    </select>
+    <!-- 非常复杂的结果映射 -->
+    <resultMap id="rankItem" type="hello.entity.RankItem">
+        <result property="score" column="score"/>
+        <association property="user" javaType="hello.entity.User"> <!-- 也可以在mybatis中配置别名 -->
+            <result property="id" column="user_id"/>
+            <result property="name" column="user_name"/>
+        </association>
+    </resultMap>
+</mapper>
+

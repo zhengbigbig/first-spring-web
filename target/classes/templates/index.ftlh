@@ -14,11 +14,14 @@
         <th>名字</th>
         <th>分数</th>
     </tr>
-    <tr>
-        <td>${index}</td>
-        <td>${name}</td>
-        <td>${score}</td>
-    </tr>
+    <#list items as item>
+        <tr>
+            <td>${item?index+1}</td>
+            <td>${item.user.name}</td>
+            <td>${item.score}</td>
+        </tr>
+    </#list>
+
 </table>
 </body>
 </html>

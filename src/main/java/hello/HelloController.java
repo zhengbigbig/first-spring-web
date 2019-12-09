@@ -1,11 +1,13 @@
 package hello;
 
-import hello.service.RankService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+        import hello.entity.RankItem;
+        import hello.service.RankService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.bind.annotation.*;
+        import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
+        import java.util.HashMap;
+        import java.util.List;
 
 // MVC
 // Model View Controller
@@ -17,11 +19,15 @@ public class HelloController {
 
     @RequestMapping("/")
     public ModelAndView index() {
-        System.out.println(111);
+        List<RankItem> items = rankService.getRank();
         HashMap<String, Object> model = new HashMap<>();
-        model.put("index", 1);
-        model.put("name", "zhangxxx");
-        model.put("score", 100);
+        model.put("items", items);
         return new ModelAndView("index", model);
+    }
+
+    @RequestMapping("/rankData")
+    @ResponseBody
+    public Object getRankData(){
+        return rankService.getRank();
     }
 }
