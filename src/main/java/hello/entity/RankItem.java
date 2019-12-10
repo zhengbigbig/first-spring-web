@@ -1,6 +1,8 @@
 package hello.entity;
 
-public class RankItem {
+import java.io.Serializable; // 负责将java object -> 字节流给redis
+
+public class RankItem implements Serializable {
     private int score;
     private User user;
 
