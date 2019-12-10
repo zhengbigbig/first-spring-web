@@ -1,5 +1,6 @@
 package hello.service;
 
+import hello.anno.Cache;
 import hello.dao.RankDao;
 import hello.dao.UserMapper;
 import hello.entity.RankItem;
@@ -16,6 +17,7 @@ public class RankService {
     @Autowired
     private RankDao rankDao;
 
+    @Cache
     public List<RankItem> getRank(){
         return rankDao.getRank();
     }

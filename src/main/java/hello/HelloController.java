@@ -25,6 +25,7 @@ public class HelloController {
         return new ModelAndView("index", model);
     }
 
+
     @RequestMapping("/rankData")
     @ResponseBody
     public Object getRankData(){

@@ -1,24 +1,40 @@
 package com;
 
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 public class Main {
-    static DataService service = new DataServiceImpl();
+    static DataServiceImpl service = new DataServiceImpl();
+
+    public static class LogInterceptor implements MethodInterceptor{
+        // 拦截具体的实例方法
+        private DataServiceImpl delegate;
+
+        public LogInterceptor(DataServiceImpl delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+            System.out.println(method.getName() + " is invoked: " + Arrays.toString(objects));
+            Object retValue = method.invoke(delegate, objects);
+            System.out.println(method.getName() + " is finished: " + retValue);
+            return retValue;
+        }
+    }
 
     public static void main(String[] args) {
-        //
-        /*
-          Proxy有一个reflect和net包，此处使用reflect
-          参数
-            ClassLoader loader,
-            Class<?>[] interfaces,  只能是接口，不然会报错
-             InvocationHandler h  方法拦截后由谁处理
-          下面的DataService是被动态代理的生成的，会被LogProxy拦截，已经不是原先的DataService
+        Enhancer enhancer = new Enhancer();  // 增强
+        enhancer.setSuperclass(DataServiceImpl.class); // 动态继承，子类化。在jvm中通过动态生成继承了DataServiceImpl
+        enhancer.setCallback(new LogInterceptor(service)); // 设置回调，在每个方法被调用时，调用
 
-         */
-        DataService dataService = (DataService) Proxy.newProxyInstance(service.getClass().getClassLoader(),
-                new Class[]{DataService.class},
-                new LogProxy(service));
-        System.out.println(dataService.a(1));
+        DataServiceImpl enhancedService = (DataServiceImpl) enhancer.create();
+        enhancedService.a(1);
+        enhancedService.b(1);
     }
 }
