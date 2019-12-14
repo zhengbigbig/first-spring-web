@@ -10,6 +10,7 @@ public class Question2 {
     public static void main(String[] args) {
         count("AbC1DefG230");
         System.out.println("upperCase: " + upperCase + ", lowerCase: " + lowerCase + ", digit: " + digit);
+
     }
 
     // 统计字符串中的大写字符、小写字符、数字出现的个数
