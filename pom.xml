@@ -58,6 +58,13 @@
             <artifactId>guava</artifactId>
             <version>28.1-jre</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.18</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -76,7 +83,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.1.0</version>
                 <configuration>
-                    <url>jdbc:h2:file:/Users/zhengzhiheng/desktop/java_study/first-spring-web/test</url>
+                    <url>jdbc:mysql://localhost:3306/match</url>
                     <user>root</user>
                     <password>root</password>
                 </configuration>
