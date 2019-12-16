@@ -5,10 +5,10 @@
 <mapper namespace="MyMapper">
     <!--    要映射的结果RankItem类是一个复杂的结果映射包含的User，因此使用mybatis的结果映射-->
     <select id="selectRank" resultMap="rankItem">
-        select USER.ID as user_id, name as user_name, M2.SCORE as score
-        from USER
-                 join MATCH M2 on USER.ID = M2.USER_ID
-        order by score
+        select user.id as user_id, name as user_name, M.score as score
+        from user
+                 join `match` M on user.id = M.user_id
+        order by M.score
     </select>
     <!-- 非常复杂的结果映射 -->
     <resultMap id="rankItem" type="hello.entity.RankItem">
