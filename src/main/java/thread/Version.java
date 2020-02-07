@@ -1,11 +1,13 @@
 package thread;
 
 import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 public class Version {
     public static void main(String[] args) throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(10);
+        CyclicBarrier barrier = new CyclicBarrier(10);
 
         for (int i = 0; i < 10; i++) {
             int finalI = i;
@@ -18,11 +20,16 @@ public class Version {
                 }
                 System.out.println("线程" + finalI + "干完了");
 
-                latch.countDown();
+                try {
+                    barrier.await();
+                } catch (InterruptedException | BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("等待线程全部完成了才继续");
+
             }).start();
         }
 
-        latch.await(); // 等待线程执行完再执行主线程
-        System.out.println("全部干完");
     }
 }
