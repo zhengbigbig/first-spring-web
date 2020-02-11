@@ -11,7 +11,7 @@ public class Singleton {
     private Singleton () {
     }
 
-    private static Singleton INSTANCE = null;
+    private volatile static Singleton INSTANCE = null;
 
     public static Singleton getInstance() {
         if(null == INSTANCE){
@@ -24,3 +24,4 @@ public class Singleton {
         return INSTANCE;
     }
 }
+
